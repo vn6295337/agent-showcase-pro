@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,6 +23,8 @@ import {
   Database,
   GitBranch,
   Play,
+  Sun,
+  Moon,
 } from "lucide-react";
 
 // Sample SWOT data for Tesla
@@ -74,6 +76,11 @@ export default function Index() {
   const [currentStep, setCurrentStep] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [activeTab, setActiveTab] = useState("analysis");
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDark);
+  }, [isDark]);
 
   const handleGenerate = async () => {
     setIsLoading(true);
@@ -126,10 +133,20 @@ export default function Index() {
                 </p>
               </div>
             </div>
-            <Badge variant="outline" className="gap-1.5">
-              <Zap className="h-3 w-3" />
-              Agentic Automation Demo
-            </Badge>
+            <div className="flex items-center gap-3">
+              <Badge variant="outline" className="gap-1.5">
+                <Zap className="h-3 w-3" />
+                Agentic Automation Demo
+              </Badge>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsDark(!isDark)}
+                className="h-8 w-8"
+              >
+                {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </Button>
+            </div>
           </div>
         </div>
       </header>
